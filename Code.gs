@@ -6,7 +6,7 @@
 // 1) Add People and Calendar service by clicking on the "+"" icon next to "Services" at the left pannel.
 
 // # INSTRUCTION Sync birthdays and special events from your Google Contacts into any Google Calendar...
-// 1) Adjust the "ContactsEventLocalization" and the "Config" below before you proceed.
+// 1) Adjust the "Localization" and the "Config" below before you proceed.
 // 2) Click "Save project to Drive" above afterwards
 // 3) Run this script for the first time...
 //   1) Select "run_syncEvents" in the dropdown menu above, then click "Run"
@@ -21,7 +21,7 @@
 // # INSTRUCTION Remove all synced events...
 // 1) Select "run_removeEvents" in the dropdown menu above, then click "Run"
 
-const ContactsEventLocalization = { 
+const Localization = { 
   birthday: "Birthday", anniversary: "Anniversary", ordinalFormat: ordinalFormat_en, // en
   // birthday: "Geburtstag", anniversary: "Jahrestag", ordinalFormat: ordinalFormat_de, // de
 };
@@ -38,8 +38,8 @@ const Config = {
     labelId: "CHANGE_ME",
     // If not empty, only sync those contact event types/labels
     annualEventTypes: [
-      // ContactsEventLocalization.birthday,
-      // ContactsEventLocalization.anniversary,
+      // Localization.birthday,
+      // Localization.anniversary,
       // YOUR CUSTOM ANUAL EVENT LABELS
     ],
   },
@@ -206,7 +206,7 @@ function getContactEvents(connection) {
       console.warn(`Skip birthday without date from ${contact.name}`);
     } else {
       events.push({
-        type: ContactsEventLocalization.birthday,
+        type: Localization.birthday,
         date: birthday.date,
       });
     }
@@ -245,7 +245,7 @@ function getContactEvents(connection) {
     if (event.date.year) {
       const currentYear = new Date().getFullYear();
       const age = currentYear - event.date.year;
-      event.summary += ` (${ContactsEventLocalization.formatOrdinal(age)})`;
+      event.summary += ` (${Localization.ordinalFormat(age)})`;
     }
   });
 
