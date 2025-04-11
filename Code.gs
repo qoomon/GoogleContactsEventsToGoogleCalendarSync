@@ -1,5 +1,5 @@
 // SOURCE: https://github.com/qoomon/GoogleContactsEventsToGoogleCalendarSync
-// Version: 1.0.3
+// Version: 1.0.4
 // Author: qoomon
 
 // # INSTRUCTION Initial setup...
@@ -21,9 +21,10 @@
 // # INSTRUCTION Remove all synced events...
 // 1) Select "run_removeEvents" in the dropdown menu above, then click "Run"
 
-// en: { birthday: "birthday",   anniversary: "anniversary", formatOrdinal: formatOrdinal_en }
-// de: { birthday: "Geburtstag", anniversary: "Jahrestag",   formatOrdinal: formatOrdinal_de }
-const ContactsEventLocalization = { birthday: "Birthday", anniversary: "Anniversary" };
+const ContactsEventLocalization = { 
+  birthday: "Birthday", anniversary: "Anniversary", ordinalFormat: ordinalFormat_en, // en
+  // birthday: "Geburtstag", anniversary: "Jahrestag", ordinalFormat: ordinalFormat_de, // de
+};
 
 const Config = {
   // --- Google Contacts ---
@@ -35,10 +36,11 @@ const Config = {
     //   - Click on any contact label on the left pannel,
     //     the last part of the url address is the contactsLabelId (https://contacts.google.com/label/[contactsLabelId]?...)
     labelId: "CHANGE_ME",
-    // Only those contact event types are synced. Add custom labels if needed.
+    // If not empty, only sync those contact event types/labels
     annualEventTypes: [
-      ContactsEventLocalization.birthday,
-      ContactsEventLocalization.anniversary,
+      // ContactsEventLocalization.birthday,
+      // ContactsEventLocalization.anniversary,
+      // YOUR CUSTOM ANUAL EVENT LABELS
     ],
   },
   // --- Google Calendar ---
@@ -178,7 +180,7 @@ function getContactsEvents({ labelId, types }) {
   types = types.map((type) => type.toLowerCase());
   return getContactsConections({ labelId })
     .flatMap(getContactEvents)
-    .filter((event) => types.includes(event.type.toLowerCase()));
+    .filter((event) => types.length === 0 || types.includes(event.type.toLowerCase()));
 }
 
 function getContactEvents(connection) {
@@ -323,11 +325,11 @@ function nextDay(date) {
   return nextDayDate;
 }
 
-function formatOrdinal_de(n) { 
+function ordinalFormat_de(n) { 
   return `${n}.`
 }
-  
-function formatOrdinal_en(n) {
+
+function ordinalFormat_en(n) {
   const ordinalRules = new Intl.PluralRules("en", { type: "ordinal" });
   const suffixes = {
     one: "st",
