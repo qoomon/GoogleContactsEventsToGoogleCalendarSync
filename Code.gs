@@ -23,9 +23,16 @@
 
 const Localization = { 
   // en
-  birthday: "Birthday", anniversary: "Anniversary", ordinalFormat: ordinalFormat_en, 
+  birthday: "Birthday", anniversary: "Anniversary", ordinalFormat: (n) => {
+    const ordinalRules = new Intl.PluralRules("en", { type: "ordinal" });
+    const suffixes = {one: "st", two: "nd", few: "rd", other: "th"};
+    const rule = ordinalRules.select(n);
+    return `${n}${suffixes[rule]}`;
+  }, 
   // de
-  // birthday: "Geburtstag", anniversary: "Jahrestag", ordinalFormat: ordinalFormat_de, 
+  // birthday: "Geburtstag", anniversary: "Jahrestag", ordinalFormat: (n) => { 
+  //   return `${n}.`
+  // }, 
 };
 
 const Config = {
@@ -325,20 +332,4 @@ function nextDay(date) {
   const nextDayDate = new Date(date);
   nextDayDate.setDate(date.getDate() + 1);
   return nextDayDate;
-}
-
-function ordinalFormat_de(n) { 
-  return `${n}.`
-}
-
-function ordinalFormat_en(n) {
-  const ordinalRules = new Intl.PluralRules("en", { type: "ordinal" });
-  const suffixes = {
-    one: "st",
-    two: "nd",
-    few: "rd",
-    other: "th",
-  }
-  const rule = ordinalRules.select(n);
-  return `${n}${suffixes[rule]}`;
 }
