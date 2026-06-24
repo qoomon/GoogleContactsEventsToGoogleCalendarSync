@@ -31,8 +31,8 @@ const Localization = {
 const Config = {
   // --- Google Contacts ---
   contacts: {
-    // If undefined all contacts are synced
-    // If set only contacts with that label are synced
+    // If not set all contacts are synced
+    // If set only contacts with that very label are synced
     //   To get the contactsLabelId...
     //   - Open https://contacts.google.com/
     //   - Click on any contact label on the left pannel,
