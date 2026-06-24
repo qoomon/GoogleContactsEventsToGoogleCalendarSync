@@ -1,9 +1,9 @@
 # Google Contacts Events To Google Calendar Sync
 
-A [Google Scripts](https://script.google.com) to sync Google Contacts events to any Google Calendar
+A [Google Scripts](https://script.google.com) sync Google Contacts events to any Google Calendar
 
 ## Features
-- Select a **specific contact groups** to sync
+- Configure a **specific contact label** to sync
   - Say goodbye to unwanted birthday and anniversary reminders in your calendar.
 - Specify **which contact events** you want to sync
   - By default calendar events for contacts **birthdays** and **anniversaries** are created.
