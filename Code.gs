@@ -22,8 +22,10 @@
 // 1) Select "run_removeEvents" in the dropdown menu above, then click "Run"
 
 const Localization = { 
-  birthday: "Birthday", anniversary: "Anniversary", ordinalFormat: ordinalFormat_en, // en
-  // birthday: "Geburtstag", anniversary: "Jahrestag", ordinalFormat: ordinalFormat_de, // de
+  // en
+  birthday: "Birthday", anniversary: "Anniversary", ordinalFormat: ordinalFormat_en, 
+  // de
+  // birthday: "Geburtstag", anniversary: "Jahrestag", ordinalFormat: ordinalFormat_de, 
 };
 
 const Config = {
