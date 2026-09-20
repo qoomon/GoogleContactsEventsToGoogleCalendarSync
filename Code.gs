@@ -179,7 +179,7 @@ function getContactsConections({ labelId }) {
       ? response.connections?.filter((connection) =>
           connection.memberships?.some((membership) => membership.contactGroupMembership?.contactGroupId === labelId))
       : response.connections;
-    result.push(...connections);
+    result.push(...(connections ?? []));
   } while (nextPageToken);
 
   return result;
@@ -195,7 +195,7 @@ function getContactsEvents({ labelId, types }) {
 function getContactEvents(connection) {
   const contact = {
     resourceName: connection.resourceName,
-    name: connection.names?.[0].displayName,
+    name: connection.names?.[0]?.displayName,
   };
   if (!contact.name) {
     console.warn("Skip connection without name");
@@ -268,9 +268,13 @@ function getContactEvents(connection) {
 }
 
 function createOrUpdateCalendarEventFromContactEvent(calendarId, contactEvent) {
-  // NOTE as of now (2025-01-01) there is no way to determine the creation date of the contact, therefore we use 1970 as the event start date
+  // NOTE as of now (2025-01-01) there is no way to determine the creation date of the contact.
+  // Therefore we use 1970 as the event start date, except for Feb 29 without a year where we use 1972 to preserve the contact date.
+  const defaultEventYear = !contactEvent.date.year && contactEvent.date.month === 2 && contactEvent.date.day === 29
+    ? 1972
+    : 1970;
   const contactEventDate = new Date([
-    contactEvent.date.year ?? 1970,
+    contactEvent.date.year ?? defaultEventYear,
     String(contactEvent.date.month).padStart(2, "0"),
     String(contactEvent.date.day).padStart(2, "0"),
   ].join("-"));
