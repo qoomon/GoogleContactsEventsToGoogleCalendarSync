@@ -1,5 +1,5 @@
 // SOURCE: https://github.com/qoomon/GoogleContactsEventsToGoogleCalendarSync
-// Version: 1.0.4
+// Version: 1.0.5
 // Author: qoomon
 
 // # INSTRUCTION Initial setup...
